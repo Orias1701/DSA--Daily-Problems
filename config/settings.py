@@ -40,6 +40,11 @@ class Settings:
     ADMIN_BANK_NAME: str = os.getenv("ADMIN_BANK_NAME", "Ngân hàng TMCP")
     ADMIN_BANK_NUMBER: str = os.getenv("ADMIN_BANK_NUMBER", "1234567890")
     ADMIN_BANK_HOLDER: str = os.getenv("ADMIN_BANK_HOLDER", "CONG TY SICBO")
+    # VietQR (optional): BIN ngân hàng để tạo QR thanh toán
+    # Ví dụ: Vietcombank=970436, ACB=970416, Techcombank=970407...
+    ADMIN_BANK_BIN: str = os.getenv("ADMIN_BANK_BIN", "")
+    # Template ảnh VietQR (tham khảo: compact2, compact, qr_only...)
+    VIETQR_TEMPLATE: str = os.getenv("VIETQR_TEMPLATE", "compact2")
 
 
 settings = Settings()

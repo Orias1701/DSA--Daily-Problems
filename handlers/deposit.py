@@ -1,4 +1,5 @@
 import re
+from urllib.parse import quote
 from aiogram import F, Router
 from aiogram.types import CallbackQuery, Message
 from aiogram.fsm.context import FSMContext
@@ -16,6 +17,23 @@ from utils import format_currency
 router = Router(name="deposit")
 
 SEP = "━━━━━━━━━━━━━━━━━━━━━━"
+
+def _build_vietqr_image_url(amount: int, add_info: str) -> str | None:
+    """
+    Tạo URL ảnh VietQR (img.vietqr.io). Trả None nếu thiếu cấu hình.
+    Yêu cầu: ADMIN_BANK_BIN + ADMIN_BANK_NUMBER.
+    """
+    bank_bin = (settings.ADMIN_BANK_BIN or "").strip()
+    account_no = (settings.ADMIN_BANK_NUMBER or "").strip()
+    if not bank_bin or not account_no:
+        return None
+    template = (settings.VIETQR_TEMPLATE or "compact2").strip()
+    add_info_q = quote(add_info, safe="")
+    account_name_q = quote(settings.ADMIN_BANK_HOLDER or "", safe="")
+    return (
+        f"https://img.vietqr.io/image/{bank_bin}-{account_no}-{template}.png"
+        f"?amount={amount}&addInfo={add_info_q}&accountName={account_name_q}"
+    )
 
 
 @router.callback_query(F.data == "deposit")
@@ -39,7 +57,8 @@ async def cb_deposit_help(callback: CallbackQuery, session) -> None:
         "1️⃣ Chọn <b>Tạo mã nạp</b>\n"
         "2️⃣ Chuyển <b>đúng số tiền</b>\n"
         "3️⃣ Nội dung chuyển khoản: <b>đúng mã</b> (NAP...)\n"
-        "4️⃣ Hệ thống sẽ duyệt (tự động nếu dùng Bank API)"
+        "4️⃣ Hệ thống sẽ duyệt (tự động nếu dùng Bank API)\n\n"
+        "💡 Nếu đã cấu hình VietQR, bot sẽ gửi <b>ảnh QR</b> để quét thanh toán."
     )
     await callback.message.edit_text(
         text,
@@ -106,6 +125,19 @@ async def msg_deposit_amount(
         "Giao dịch sẽ được duyệt khi hệ thống xác nhận."
     )
     await message.answer(body, parse_mode="HTML", reply_markup=main_menu_keyboard())
+
+    qr_url = _build_vietqr_image_url(amount=amount, add_info=code)
+    if qr_url:
+        await message.answer_photo(
+            photo=qr_url,
+            caption=(
+                f"📲 <b>QR THANH TOÁN</b>\n\n{SEP}\n"
+                f"💰 Số tiền: <b>{format_currency(amount)}</b> VNĐ\n"
+                f"📌 Nội dung: <b>{code}</b>\n{SEP}\n"
+                "Quét QR và chuyển <b>đúng số tiền</b> + <b>đúng nội dung</b> nhé."
+            ),
+            parse_mode="HTML",
+        )
 
     bank = BankService()
     if bank.enabled and bank.base_url:

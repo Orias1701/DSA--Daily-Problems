@@ -191,6 +191,7 @@ python main.py
 - `DATABASE_URL`: Mặc định `sqlite+aiosqlite:///./data/bot.db`; PostgreSQL: `postgresql+asyncpg://user:pass@host:5432/dbname`
 - `BANK_API_ENABLED`, `BANK_API_URL`: Bật và URL API ngân hàng (nếu dùng tự duyệt nạp)
 - `ADMIN_BANK_NAME`, `ADMIN_BANK_NUMBER`, `ADMIN_BANK_HOLDER`: Thông tin ngân hàng hiển thị khi nạp
+- `ADMIN_BANK_BIN`, `VIETQR_TEMPLATE`: (Tuỳ chọn) tạo ảnh QR VietQR khi user tạo mã nạp
 
 ## Database
 
