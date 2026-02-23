@@ -1,0 +1,30 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "type": "cppbuild",
+            "label": "Build C++ (MSYS2-UCRT64)",
+            "command": "E:/_Compliers/msys64/ucrt64/bin/g++.exe",
+            "args": [
+                "-fdiagnostics-color=always",
+                "-g",
+                "-I${workspaceFolder}/include",
+                "${file}",
+                "-o",
+                "${workspaceFolder}/build/${fileBasenameNoExtension}.exe",
+                "-lgdi32"
+            ],
+            "options": {
+                "cwd": "E:/_Compliers/msys64/ucrt64/bin"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "detail": "Build C++ project using MSYS2-UCRT64 toolchain"
+        }
+    ]
+}

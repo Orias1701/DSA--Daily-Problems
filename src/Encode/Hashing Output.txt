@@ -1,0 +1,76 @@
+DEFAULT = 14695981039346656037
+PRIME = 1099511628211
+BIT_ROTATE = 13
+
+CHUỖI 1: "ABC"
+CHUỖI 2: "ABD"
+
+-----------------------------------
+
+LỜI GIẢI:
+
+BẮT ĐẦU VỚI CHUỖI: "ABC"
+TA KHỞI TẠO HASH = DEFAULT = 14695981039346656037
+
+-----------------------------------
+
+Xử lý kí tự: A
+Chuyển 8 bit cuối của A thành số nguyên:
+static_cast <uint8_t> (“A”) = 65
+
+Thực hiên xor A với HASH ban đầu để tạo hỗn loạn:
+HASH ^ A = 14695981039346656037 ^ 65 = 14695981039346656100
+
+Tiếp tục thực hiện nhân HASH với PRIME để khuếch đại hỗn loạn:
+HASH * PRIME = 14695981039346656100 * 1099511628211 = 12638222384927744748
+
+Xoay HASH 13 bit để đảo thứ tự bit để lan truyền sự thay đổi ra toàn bộ chuỗi:
+HASH xoay 13 bit: 9190035670081312236
+
+-----------------------------------
+
+Xử lý kí tự: B
+Tương tự như A nhưng HASH ban đầu bằng với HASH đầu ra sau khi xử lý A
+static_cast <uint8_t> (“B”) = 66
+HASH ^ B = 9190035670081312174
+HASH * PRIME = 1465539822478513834
+HASH xoay 13 bit: 15318577832776778378
+
+-----------------------------------
+
+Xử lý kí tự: C
+Tương tự như A, B, HASH ban đầu bằng với HASH đầu ra sau khi xử lý B
+static_cast <uint8_t> (“C”) = 67
+HASH ^ C = 15318577832776778441
+HASH * PRIME = 1227068455419673483
+HASH xoay 13 bit: 17116010699969094176
+
+-----------------------------------
+
+TIẾP TỤC XỬ LÝ CHUỖI: "ABD"
+Vẫn khởi tạo HASH và xử lý kí tự A, B tương tự như khi xử lý chuỗi "ABC"
+Thu được HASH: 15318577832776778378
+
+-----------------------------------
+
+Xử lý kí tự: D
+Tương tự như A, B, C
+static_cast <uint8_t> (“D”) = 68
+HASH ^ D = 15318577832776778446
+HASH * PRIME = 1227073952977814538
+HASH xoay 13 bit: 17161046696260616736
+
+-----------------------------------
+
+Kết quả băm:
+-----------------------------------
+Input 1 : "ABC"
+Hash Int: 17116010699969094176
+Hash Hex: ed88490c0f716220
+-----------------------------------
+Input 2 : "ABD"
+Hash Int: 17161046696260616736
+Hash Hex: ee28490c10814220
+-----------------------------------
+
+Có thể thấy, chỉ khác nhau đúng 1 kí tự nhưng kết quả đầu ra lại hoàn toàn khác nhau. Đây là tính 
