@@ -1,7 +1,13 @@
+from config import settings
+from utils.formatters import format_currency
+
 SEP = "━━━━━━━━━━━━━━━━━━━━━━"
 
 
 def welcome_new_user(name: str) -> str:
+    bonus = format_currency(settings.WELCOME_BONUS)
+    wager = format_currency(settings.WAGER_REQUIREMENT)
+    cb = f"{settings.CASHBACK_RATE * 100:.1f}".rstrip("0").rstrip(".")
     return f"""🎰 Chào {name}!
 
 {SEP}
@@ -18,10 +24,10 @@ def welcome_new_user(name: str) -> str:
 • Không can thiệp, không gian lận
 
 {SEP}
-🎁 <b>THƯỞNG CHÀO MỪNG: 20.000</b>
+🎁 <b>THƯỞNG CHÀO MỪNG: {bonus}</b>
 {SEP}
-• Yêu cầu cược: <b>300.000</b> trước khi rút
-• Cashback hàng ngày: <b>0.5%</b> tổng cược
+• Yêu cầu cược: <b>{wager}</b> trước khi rút
+• Cashback hàng ngày: <b>{cb}%</b> tổng cược
 
 👉 Nhấn nút bên dưới để bắt đầu trải nghiệm!"""
 
@@ -81,27 +87,33 @@ def profile_text(
 
 
 def help_text() -> str:
+    min_bet = format_currency(settings.MIN_BET)
+    max_bet = format_currency(settings.MAX_BET)
+    min_wd = format_currency(settings.MIN_WITHDRAW)
+    bonus = format_currency(settings.WELCOME_BONUS)
+    wager = format_currency(settings.WAGER_REQUIREMENT)
+    cb = f"{settings.CASHBACK_RATE * 100:.1f}".rstrip("0").rstrip(".")
     return f"""📖 <b>HƯỚNG DẪN</b>
 
 {SEP}
 🎲 <b>Tài Xỉu</b>
-• Tài: tổng 3 xúc xắc 11-18
+• Tài: tổng 3 xúc xắc {settings.TAI_MIN}-{settings.TAI_MAX}
 • Xỉu: tổng 3-10
-• Cược tối thiểu: 10.000
-• Cược tối đa: 1.000.000
-• Tỷ lệ: 1.93x (1.87x khi cược max)
+• Cược tối thiểu: {min_bet}
+• Cược tối đa: {max_bet}
+• Tỷ lệ: {settings.PAYOUT_NORMAL}x ({settings.PAYOUT_MAX_BET}x khi cược max)
 
 💰 <b>Nạp / Rút</b>
 • Nạp: tạo mã, chuyển đúng số tiền + nội dung
-• Rút: tối thiểu 200.000, tối đa 5 lần/ngày
+• Rút: tối thiểu {min_wd}, tối đa {settings.MAX_WITHDRAW_PER_DAY} lần/ngày
 • Cần hoàn thành yêu cầu cược trước khi rút
 
 🎁 <b>Bonus & Cashback</b>
-• Thưởng chào mừng: 20.000
-• Yêu cầu cược: 300.000
-• Cashback: 0.5% cược trong ngày
+• Thưởng chào mừng: {bonus}
+• Yêu cầu cược: {wager}
+• Cashback: {cb}% cược trong ngày
 
 📞 <b>Hỗ trợ</b>
 • Mở ticket để nhắn với admin (ẩn danh)
-• Ticket tự đóng sau 10 phút không hoạt động
+• Ticket tự đóng sau {settings.TICKET_INACTIVITY_MINUTES} phút không hoạt động
 {SEP}"""

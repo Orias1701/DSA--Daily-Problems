@@ -186,12 +186,38 @@ python main.py
 
 ## Biến môi trường (.env)
 
-- `BOT_TOKEN`: Token bot từ @BotFather
-- `ADMIN_IDS`: ID Telegram của admin, cách nhau bằng dấu phẩy
-- `DATABASE_URL`: Mặc định `sqlite+aiosqlite:///./data/bot.db`; PostgreSQL: `postgresql+asyncpg://user:pass@host:5432/dbname`
-- `BANK_API_ENABLED`, `BANK_API_URL`: Bật và URL API ngân hàng (nếu dùng tự duyệt nạp)
-- `ADMIN_BANK_NAME`, `ADMIN_BANK_NUMBER`, `ADMIN_BANK_HOLDER`: Thông tin ngân hàng hiển thị khi nạp
-- `ADMIN_BANK_BIN`, `VIETQR_TEMPLATE`: (Tuỳ chọn) tạo ảnh QR VietQR khi user tạo mã nạp
+**Tất cả chỉ số cấu hình (giá cả, tên chủ TK, giới hạn…) đều đặt biến trong `.env` và có thể thay đổi mà không cần sửa code.**
+
+| Biến | Mô tả | Mặc định |
+|------|--------|----------|
+| `BOT_TOKEN` | Token bot từ @BotFather | (bắt buộc) |
+| `ADMIN_IDS` | ID Telegram admin, cách nhau dấu phẩy | (bắt buộc) |
+| `DATABASE_URL` | SQLite hoặc PostgreSQL | `sqlite+aiosqlite:///./data/bot.db` |
+| `BANK_API_ENABLED`, `BANK_API_URL` | Bật và URL API ngân hàng (tự duyệt nạp) | `false`, rỗng |
+| **Ngân hàng nhận tiền** | | |
+| `ADMIN_BANK_NAME` | Tên ngân hàng | Ngân hàng TMCP |
+| `ADMIN_BANK_NUMBER` | Số tài khoản | 1234567890 |
+| `ADMIN_BANK_HOLDER` | Tên chủ tài khoản | CONG TY SICBO |
+| `ADMIN_BANK_BIN` | BIN ngân hàng (VietQR) | rỗng |
+| `VIETQR_TEMPLATE` | Template ảnh VietQR | compact2 |
+| **Game Tài Xỉu** | | |
+| `MIN_BET`, `MAX_BET` | Cược min/max (VNĐ) | 10000, 1000000 |
+| `PAYOUT_NORMAL`, `PAYOUT_MAX_BET` | Tỷ lệ thắng | 1.93, 1.87 |
+| `TAI_MIN`, `TAI_MAX` | Khoảng Tài (tổng xúc xắc) | 11, 18 |
+| `BET_AMOUNT_PRESETS` | Mức cược trên nút, cách nhau dấu phẩy | 10000,50000,... |
+| **Bonus & Cashback** | | |
+| `WELCOME_BONUS` | Thưởng chào mừng (VNĐ) | 20000 |
+| `WAGER_REQUIREMENT` | Yêu cầu cược trước khi rút (VNĐ) | 300000 |
+| `CASHBACK_RATE` | Tỷ lệ cashback (số thập phân) | 0.005 |
+| **Nạp / Rút** | | |
+| `MIN_DEPOSIT` | Nạp tối thiểu (VNĐ) | 10000 |
+| `MIN_WITHDRAW` | Rút tối thiểu (VNĐ) | 200000 |
+| `MAX_WITHDRAW_PER_DAY` | Số lần rút tối đa mỗi ngày | 5 |
+| **Hệ thống** | | |
+| `TICKET_INACTIVITY_MINUTES` | Tự đóng ticket sau (phút) | 10 |
+| `DAILY_RESET_HOUR` | Giờ reset hàng ngày (UTC) | 0 |
+
+Chi tiết đầy đủ xem file `.env.example`.
 
 ## Database
 

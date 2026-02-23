@@ -35,7 +35,12 @@ def game_choice_keyboard() -> InlineKeyboardMarkup:
 
 
 def bet_amount_keyboard() -> InlineKeyboardMarkup:
-    amounts = [10_000, 50_000, 100_000, 500_000, 1_000_000]
+    amounts = [
+        a for a in settings.BET_AMOUNT_PRESETS
+        if settings.MIN_BET <= a <= settings.MAX_BET
+    ]
+    if not amounts:
+        amounts = [settings.MIN_BET, settings.MAX_BET]
     builder = InlineKeyboardBuilder()
     row = []
     for a in amounts:

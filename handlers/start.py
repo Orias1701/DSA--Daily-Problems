@@ -36,12 +36,12 @@ async def cmd_start(message: Message, session) -> None:
         text = welcome_new_user(name)
     else:
         vip_name = await _get_vip_name_async(user.vip_level, vip_repo)
-        cashback_rate = "0.5"
+        cashback_pct = f"{settings.CASHBACK_RATE * 100:.1f}".rstrip("0").rstrip(".")
         text = welcome_returning_user(
             name=name,
             balance=format_currency(user.balance),
             vip_name=vip_name,
-            cashback_rate=cashback_rate,
+            cashback_rate=cashback_pct,
             withdraw_count_today=user.withdraw_count_today,
             max_withdraw_per_day=settings.MAX_WITHDRAW_PER_DAY,
         )
@@ -63,11 +63,12 @@ async def cb_main_menu(callback: CallbackQuery, session) -> None:
         return
     name = user.first_name or "User"
     vip_name = await _get_vip_name_async(user.vip_level, vip_repo)
+    cashback_pct = f"{settings.CASHBACK_RATE * 100:.1f}".rstrip("0").rstrip(".")
     text = welcome_returning_user(
         name=name,
         balance=format_currency(user.balance),
         vip_name=vip_name,
-        cashback_rate="0.5",
+        cashback_rate=cashback_pct,
         withdraw_count_today=user.withdraw_count_today,
         max_withdraw_per_day=settings.MAX_WITHDRAW_PER_DAY,
     )

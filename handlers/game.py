@@ -156,7 +156,7 @@ async def _place_bet(
     won = GameService.check_win(choice, total)
     profit = GameService.calculate_profit(amount, won, multiplier)
     new_vip = await vip_repo.get_level_for_wager(user.total_wager + amount)
-    cashback_rate = 0.005
+    cashback_rate = settings.CASHBACK_RATE
     if new_vip > 0:
         v = await vip_repo.get_by_level(new_vip)
         if v:
@@ -220,7 +220,7 @@ async def _place_bet_message(
     won = GameService.check_win(choice, total)
     profit = GameService.calculate_profit(amount, won, multiplier)
     new_vip = await vip_repo.get_level_for_wager(user.total_wager + amount)
-    cashback_rate = 0.005
+    cashback_rate = settings.CASHBACK_RATE
     if new_vip > 0:
         v = await vip_repo.get_by_level(new_vip)
         if v:

@@ -100,8 +100,10 @@ async def msg_deposit_amount(
         await message.answer("Vui lòng nhập số nguyên dương.")
         return
     amount = int(text)
-    if amount < 10000:
-        await message.answer("Số tiền tối thiểu 10.000 VNĐ.")
+    if amount < settings.MIN_DEPOSIT:
+        await message.answer(
+            f"Số tiền tối thiểu {format_currency(settings.MIN_DEPOSIT)} VNĐ."
+        )
         return
     tx_repo = TransactionRepository(session)
     code = tx_repo.generate_deposit_code()
