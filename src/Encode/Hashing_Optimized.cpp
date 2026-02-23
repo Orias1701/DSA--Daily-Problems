@@ -5,11 +5,11 @@
 #include <iomanip>   // Dùng để định dạng luồng xuất (setfill, setw, hex)
 #include <vector>    // Dùng cấu trúc dữ liệu mảng động (vector) để làm bộ đệm
 #include <cstdint>   // Dùng cho các kiểu số nguyên có kích thước cố định (uint64_t, uint8_t)
-#include <cstring>   // Dùng cho các hàm thao tác bộ nhớ mức thấp như std::memcpy
+#include <cstring>   // Dùng cho các hàm thao tác bộ nhớ mức thấp như memcpy
 #include <filesystem>
 
-using namespace std; // Sử dụng không gian tên chuẩn std để không phải viết std:: trước mỗi hàm
-namespace fs = std::filesystem;
+using namespace std; // Sử dụng không gian tên chuẩn std để không phải viết  trước mỗi hàm
+namespace fs = filesystem;
 
 // Định nghĩa các bí danh (alias) cho kiểu dữ liệu để viết code ngắn gọn hơn
 using u64 = uint64_t; // Số nguyên không dấu 64-bit (8 bytes)
@@ -74,7 +74,7 @@ u64 hashingSuperFast(istream &stream, u64 &out_total_bytes, u64 &out_total_block
         for (streamsize i = 0; i < blocks; ++i)
         {
             u64 block64;
-            std::memcpy(&block64, data + (i * 8), sizeof(u64));
+            memcpy(&block64, data + (i * 8), sizeof(u64));
 
             hash_val ^= block64;                     
             hash_val *= PRIME;                       
