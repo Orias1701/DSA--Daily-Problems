@@ -1,15 +1,12 @@
-__pycache__/
+.cursor
+.vscode
+.idea
 
-.cursor/
-.vscode/
-.idea/
+.venv
+.env
 
-.venv/
-venv/
-data/
+build
 
 *.db
 *.sqlite
 *.pyc
-
-.env
