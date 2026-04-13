@@ -2,18 +2,16 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Debug C++ (MSYS2-UCRT64)",
-            "type": "cppdbg",
+            "name": "Debug MSVC",
+            "type": "cppvsdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/build/${fileBasenameNoExtension}.exe",
+            "program": "${workspaceFolder}/build/${fileBasenameNoExtension}/${fileBasenameNoExtension}.exe",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             "environment": [],
-            "externalConsole": false,
-            "MIMode": "gdb",
-            "miDebuggerPath": "E:/_Compliers/msys64/ucrt64/bin/gdb.exe",
-            "preLaunchTask": "C/C++: cl.exe build active file"
+            "console": "integratedTerminal",
+            "preLaunchTask": "Build with MSVC"
         }
     ]
 }

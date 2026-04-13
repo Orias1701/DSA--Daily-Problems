@@ -1,5 +1,6 @@
 {
-    "C_Cpp.default.compilerPath": "E:/_Compliers/msys64/ucrt64/bin/g++.exe",
+"C_Cpp.default.compilerPath": "cl.exe",
+    "C_Cpp.errorSquiggles": "enabled",
     "files.associations": {
         "*.dbclient-js": "javascript",
         "*.embeddedhtml": "html",
@@ -101,6 +102,5 @@
         "variant": "cpp",
         "queue": "cpp",
         "stack": "cpp"
-    },
-    "C_Cpp.errorSquiggles": "disabled"
+    }
 }
