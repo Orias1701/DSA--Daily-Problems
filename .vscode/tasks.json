@@ -2,29 +2,44 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "type": "cppbuild",
-            "label": "Build C++ (MSYS2-UCRT64)",
-            "command": "E:/_Compliers/msys64/ucrt64/bin/g++.exe",
+            "label": "Create Subfolder",
+            "type": "shell",
+            "command": "cmd",
             "args": [
-                "-fdiagnostics-color=always",
-                "-g",
-                "-I${workspaceFolder}/include",
+                "/C",
+                "if not exist \"${workspaceFolder}\\build\\${fileBasenameNoExtension}\" mkdir \"${workspaceFolder}\\build\\${fileBasenameNoExtension}\""
+            ],
+            "presentation": {
+                "reveal": "silent",
+                "close": true
+            }
+        },
+        {
+            "type": "cppbuild",
+            "label": "Build with MSVC",
+            "command": "cl.exe",
+            "args": [
+                "/nologo",
+                "/Zi",
+                "/EHsc",
+                "/I", "${workspaceFolder}/include",
                 "${file}",
-                "-o",
-                "${workspaceFolder}/build/${fileBasenameNoExtension}.exe",
-                "-lgdi32"
+                "/Fe:", "${workspaceFolder}/build/${fileBasenameNoExtension}/${fileBasenameNoExtension}.exe",
+                "/Fo:", "${workspaceFolder}/build/${fileBasenameNoExtension}/",
+                "/Fd:", "${workspaceFolder}/build/${fileBasenameNoExtension}/",
+                "/link", "/INCREMENTAL:NO",
+                "gdi32.lib"
             ],
             "options": {
-                "cwd": "E:/_Compliers/msys64/ucrt64/bin"
+                "cwd": "${fileDirname}"
             },
-            "problemMatcher": [
-                "$gcc"
-            ],
+            "problemMatcher": ["$msCompile"],
+            "dependsOn": "Create Subfolder",
             "group": {
                 "kind": "build",
                 "isDefault": true
             },
-            "detail": "Build C++ project using MSYS2-UCRT64 toolchain"
+            "detail": "Biên dịch bằng MSVC compiler (cl.exe)"
         }
     ]
 }
